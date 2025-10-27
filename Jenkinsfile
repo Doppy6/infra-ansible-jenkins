@@ -18,7 +18,7 @@ pipeline {
         
         stage('Run Ansible Playbook') {
             steps { 
-                withCredentials([sshUserPrivateKey(credentialsId: 'ansible-ssh-key', keyFileVariable: 'ssh-key')]) {
+                sshagent([sshUserPrivateKey(credentialsId: 'ansible-ssh-key')]) {
                     ansiblePlaybook(credentialsId: "{{ $ssh-key }}", inventory: 'host.ini', playbook: 'deploy.yml')
                 }
             }
